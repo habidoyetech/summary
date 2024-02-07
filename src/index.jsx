@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import LoginPage from './pages/Login';
 import App from './App';
 import Dashboard from './pages/Dashboard';
+import AddSummary from './pages/AddSummary';
 
 
 
@@ -20,14 +21,18 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <Dashboard/>
+
+  },
+  {
+    path: "/dashboard/add-summary",
+    element: <AddSummary/>
   }
 ])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router}/>
-    
+    <RouterProvider router={router}/>  
   </React.StrictMode>
 );
 
