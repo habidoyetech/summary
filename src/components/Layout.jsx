@@ -12,7 +12,7 @@ const Layout = ({children}) => {
                     <Navbar/>
 
                 </div>
-                <main className='py-10 w-full'>
+                <main className='py-10 w-full overflow-hidden'>
                     {children}
                 </main>
 
