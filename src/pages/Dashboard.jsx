@@ -32,7 +32,7 @@ const Dashboard = () => {
             setSummaries(data.summariesObject);
             console.log(summaries)
           } catch (error) {
-            sconsole.log(error)
+            console.log(error)
           }
         };
     
