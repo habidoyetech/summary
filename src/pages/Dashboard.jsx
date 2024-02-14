@@ -12,9 +12,6 @@ const Dashboard = () => {
     const [token ] = useState(localStorage.getItem('token'))
 
     useEffect(() => {
-
-        
-
         const fetchData = async () => {
           try {
             const response = await fetch('http://summary.eu-4.evennode.com/api/v1/summaries', {
@@ -30,15 +27,15 @@ const Dashboard = () => {
             }
     
             const data = await response.json();
-            setSummaries(data.summariesObject);
+            setSummaries([...data.summariesObject]);
             console.log(summaries)
           } catch (error) {
             console.log(error)
           }
         };
-    
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         fetchData();
-      }, [token]);
+      }, []);
 
   return (
     <Layout>
