@@ -3,13 +3,13 @@ import Layout from "../components/Layout";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-const token = localStorage.getItem('token')
+// const token = localStorage.getItem('token')
 
 const Dashboard = () => {
 
     const [summaries, setSummaries] = useState([]);
     // const [error, setError] = useState(null);
-    
+    const [token ] = useState(localStorage.getItem('token'))
 
     useEffect(() => {
 
