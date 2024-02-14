@@ -7,9 +7,9 @@ import { useEffect, useState } from "react";
 
 const Dashboard = () => {
 
-    const [summaries, setSummaries] = useState([]);
-    // const [error, setError] = useState(null);
-    const [token ] = useState(localStorage.getItem('token'))
+    // const [summaries, setSummaries] = useState([]);
+    // // const [error, setError] = useState(null);
+    // const [token ] = useState(localStorage.getItem('token'))
 
     useEffect(() => {
         const fetchData = async () => {
@@ -27,8 +27,8 @@ const Dashboard = () => {
             }
     
             const data = await response.json();
-            setSummaries([...data.summariesObject]);
-            console.log(summaries)
+            // setSummaries([...data.summariesObject]);
+            // console.log(summaries)
           } catch (error) {
             console.log(error)
           }
