@@ -12,6 +12,9 @@ const Dashboard = () => {
     // const [token ] = useState(localStorage.getItem('token'))
 
     useEffect(() => {
+
+        const token = localStorage.getItem('token')
+        
         const fetchData = async () => {
           try {
             const response = await fetch('http://summary.eu-4.evennode.com/api/v1/summaries', {
