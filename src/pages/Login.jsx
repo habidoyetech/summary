@@ -88,7 +88,7 @@ const LoginPage = () => {
             setError(true)
             setAlertIsOpen(true)
             setMessage("No Connection")
-            loading(false)
+            setLoading(false)
         } finally {
             // setTimeout(() => {
             //     setAlertIsOpen(false)    
