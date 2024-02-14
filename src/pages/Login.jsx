@@ -54,7 +54,7 @@ const LoginPage = () => {
             }
 
             
-            const response = await fetch('http://summary.eu-4.evennode.com/api/auth/login', {
+            const response = await fetch('https://summary.eu-4.evennode.com/api/auth/login', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
