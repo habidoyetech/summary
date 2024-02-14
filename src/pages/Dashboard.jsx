@@ -1,7 +1,7 @@
 import Button from "../components/Button";
 import Layout from "../components/Layout";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect} from "react";
 
 // const token = localStorage.getItem('token')
 
@@ -14,7 +14,7 @@ const Dashboard = () => {
     useEffect(() => {
 
         const token = localStorage.getItem('token')
-        
+
         const fetchData = async () => {
           try {
             const response = await fetch('http://summary.eu-4.evennode.com/api/v1/summaries', {
@@ -32,6 +32,7 @@ const Dashboard = () => {
             const data = await response.json();
             // setSummaries([...data.summariesObject]);
             // console.log(summaries)
+            console.log(data)
           } catch (error) {
             console.log(error)
           }
