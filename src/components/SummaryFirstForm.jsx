@@ -1,12 +1,20 @@
-import React from 'react'
+
 import Input from './Input';
-import { Datepicker } from 'flowbite-react';
 import DatePickerComponent from './DatePickerComponent';
-import CustomTimeFormat from './TimeField';
 import Attendees from './Attendees';
-import Button from '../components/Button'
+import { useState } from 'react';
 
 const SummaryFirstForm = ({summaryFormData, handleInputChange}) => {
+
+
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleFileChange = (event) => {
+    // Access the file using event.target.files
+    const file = event.target.file[0];
+    setSelectedFile(file);
+    console.log(selectedFile)
+  };
 
 
 
@@ -16,10 +24,10 @@ const SummaryFirstForm = ({summaryFormData, handleInputChange}) => {
         <div className='flex gap-6'>
             <div className='bg-white h-fit shadow-lg p-6 gap-6 shadow-[#C4CBD61A] w-[60%] flex rounded-xl'>
                 <div className='w-[60%] space-y-6'>
-                    <Input name='summaryTitle' type='text' handleInput={handleInputChange} value={summaryFormData.summaryTitle} label='Summary Title' placeholder='Minutes for Lekki' />
+                    <Input name='title' type='text' handleInput={handleInputChange} value={summaryFormData.summaryTitle} label='Summary Title' placeholder='Minutes for Lekki' />
                     <div className='flex w-full space-x-4'>
                       <div className=''>
-                        <DatePickerComponent/>
+                        <DatePickerComponent name=''  handleDateChange={handleInputChange}/>
                       </div>
                       
                       <div className='flex w-[38%] space-x-4'>
@@ -56,7 +64,7 @@ const SummaryFirstForm = ({summaryFormData, handleInputChange}) => {
                               </div>
                               
                           </div>
-                          <input id="dropzone-file" type="file" class="hidden" />
+                          <input id="dropzone-file" type="file" class="hidden" name='logoName' onChange={handleFileChange} />
                       </label>
                   </div> 
                   <Input placeholder='Logo Name'/>

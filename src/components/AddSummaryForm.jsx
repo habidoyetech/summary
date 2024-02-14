@@ -1,5 +1,7 @@
 import React from 'react'
 import SummaryFirstForm from './SummaryFirstForm';
+import ContractTenderedForApprovalForm from './ContractTenderedForApprovalForm';
+
 
 const AddSummaryForm = ({step, summaryFormData, handleInputChange}) => {
   
@@ -15,9 +17,7 @@ const AddSummaryForm = ({step, summaryFormData, handleInputChange}) => {
         case 2:
             return (
                 <>
-                    <div>
-                        This is me
-                    </div>
+                    <ContractTenderedForApprovalForm summaryFormData={summaryFormData} handleInputChange={handleInputChange} />
                 </>
             )
     

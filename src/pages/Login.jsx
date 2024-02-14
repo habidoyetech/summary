@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Input from '../components/Input'
 import Password from '../components/Password'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Button from '../components/Button'
+import Alert from '../components/Alert'
 
 const LoginPage = () => {
 
@@ -10,14 +11,96 @@ const LoginPage = () => {
         email: "",
         password: ""
     })
+    const [message, setMessage] = useState('')
+    const [error, setError] = useState(false)
+    const [alertIsOpen, setAlertIsOpen] = useState(false);
+    const [loading, setLoading] = useState(false)
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        const token = localStorage.getItem('token')
+
+        if(token !== null) {
+            navigate("/dashboard")
+        }
+
+    }, [])
 
     function handleLoginInput (e) {
         setLoginData((prev) => ({...prev, [e.target.name]: e.target.value}))
     }
 
+    
+
+    const handleLogin = async (e) => {
+        e.preventDefault()
+        setLoading(true)
+        try {
+            console.log('logging in')
+            if(!loginData.email) {
+                setError(true)
+                setAlertIsOpen(true)
+                setMessage('Email field required')
+                setLoading(false)
+                return
+            }
+
+            if(!loginData.password) {
+                setError(true)
+                setAlertIsOpen(true)
+                setMessage('Password field required')
+                setLoading(false)
+                return
+            }
+
+            
+            const response = await fetch('http://summary.eu-4.evennode.com/api/auth/login', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(loginData)
+            });
+
+            
+            const data = await response.json()
+            if(!response.ok) {
+                setMessage(data.message)
+                setError(true)
+                setLoading(false)
+                setAlertIsOpen(true)
+            }
+
+            if(response.ok) {
+                setMessage(data.message)
+                localStorage.setItem('token', data.token)
+                setLoading(false)
+                setAlertIsOpen(true)
+                navigate("/dashboard")
+            }
+            
+          // Handle successful login here
+          
+            // Do something with the response data
+        } catch (err) {
+            console.log(err)
+            setError(true)
+            setAlertIsOpen(true)
+            setMessage("No Connection")
+            loading(false)
+        } finally {
+            // setTimeout(() => {
+            //     setAlertIsOpen(false)    
+            // }, 2000);
+            
+        }
+      };
+
   return (
     <div className='w-full h-screen'>
-        <div className='bg-primary-color w-full h-full p-6 flex items-center justify-center'>
+        <div className='bg-primary-color w-full h-full p-6 flex items-center relative justify-center'>
+            {alertIsOpen && <Alert message={message} setError={setError} error={error} setAlertIsOpen={setAlertIsOpen}/>}
             <div className='w-full h-full rounded-3xl shadow-lg shadow-transparent  bg-white'>
                 <div className='flex justify-center items-center h-full'>
                     <div className='flex justity-center space-y-3 items-center flex-col w-[400px]'>
@@ -33,8 +116,8 @@ const LoginPage = () => {
                             </div>
                         </div>
                         
-                        <form action="" className='w-full space-y-8'>
-                            <Input name='email' type='email' value={loginData.email} placeholder='youremail@gmail.com' label='Email Address' handleInput={handleLoginInput}/>
+                        <form action="" onSubmit={handleLogin} className='w-full space-y-8'>
+                            <Input name='email' labelStyle='text-[#7D8592]' type='email' value={loginData.email} placeholder='youremail@gmail.com' label='Email Address' handleInput={handleLoginInput}/>
                             <Password value={loginData.password} label='Password' handleInput={handleLoginInput} placeholder='password'/> 
                             <div className='flex items-center justify-between'>
                                 <div className='text-[#7D8592] space-x-3'>
@@ -46,7 +129,7 @@ const LoginPage = () => {
                                 </div>
                                 
                             </div>
-                            <Button type='submit' className='px-10 py-3 space-x-4'>
+                            <Button disabled={loading} type='submit' className='px-10 py-3 bg-blue-700 text-white disabled:bg-blue-300 space-x-4'>
                                 <span>Sign In</span>
                                 <span>
                                     <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
