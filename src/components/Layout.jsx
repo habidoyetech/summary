@@ -14,7 +14,7 @@ const Layout = ({children}) => {
             navigate("/login")
         }
 
-    }, [])
+    }, [navigate])
 
   return (
     <div className='w-full min-h-screen bg-primary-color'>

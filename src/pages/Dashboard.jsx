@@ -3,6 +3,7 @@ import Layout from "../components/Layout";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
+const token = localStorage.getItem('token')
 
 const Dashboard = () => {
 
@@ -12,7 +13,7 @@ const Dashboard = () => {
 
     useEffect(() => {
 
-        const token = localStorage.getItem('token')
+        
 
         const fetchData = async () => {
           try {
@@ -37,7 +38,7 @@ const Dashboard = () => {
         };
     
         fetchData();
-      }, []);
+      }, [token]);
 
   return (
     <Layout>

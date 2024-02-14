@@ -6,7 +6,7 @@ const App = () => {
 
     useEffect(() => {
         navigate("/login")
-    }, [])
+    }, [navigate])
     
 
   return (

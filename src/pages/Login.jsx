@@ -24,7 +24,7 @@ const LoginPage = () => {
             navigate("/dashboard")
         }
 
-    }, [])
+    }, [navigate])
 
     function handleLoginInput (e) {
         setLoginData((prev) => ({...prev, [e.target.name]: e.target.value}))
