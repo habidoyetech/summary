@@ -3,6 +3,7 @@ import Layout from "../components/Layout";
 import { Link } from "react-router-dom";
 import { useEffect} from "react";
 
+
 // const token = localStorage.getItem('token')
 
 const Dashboard = () => {
@@ -14,7 +15,7 @@ const Dashboard = () => {
     useEffect(() => {
 
         const token = localStorage.getItem('token')
-
+        
         const fetchData = async () => {
           try {
             const response = await fetch('http://summary.eu-4.evennode.com/api/v1/summaries', {
@@ -38,7 +39,11 @@ const Dashboard = () => {
           }
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        fetchData();
+
+        if(token) {
+          fetchData();
+        }
+        
       }, []);
 
   return (

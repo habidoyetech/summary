@@ -4,6 +4,12 @@ import Password from '../components/Password'
 import { Link, useNavigate } from 'react-router-dom'
 import Button from '../components/Button'
 import Alert from '../components/Alert'
+import { fromUnixTime, isAfter } from "date-fns";
+import { useAuth } from '../context/AuthContext'
+import { jwtDecode } from 'jwt-decode'
+
+
+
 
 const LoginPage = () => {
 
@@ -11,19 +17,29 @@ const LoginPage = () => {
         email: "",
         password: ""
     })
-    const [message, setMessage] = useState('')
-    const [error, setError] = useState(false)
+    const [message, setMessage] = useState('');
+    const [error, setError] = useState(false);
     const [alertIsOpen, setAlertIsOpen] = useState(false);
     const [loading, setLoading] = useState(false)
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const { logout, setToken} = useAuth()
 
     useEffect(() => {
+
         const token = localStorage.getItem('token')
 
-        if(token !== null) {
-            navigate("/dashboard")
+        if(token) {
+            const decode = jwtDecode(token)
+            const date = fromUnixTime(decode.exp)
+            console.log(isAfter(new Date(), date))
+            if (isAfter(date, new Date())) {
+                navigate("/dashboard")
+            }
+            if (isAfter(new Date(), date)) {
+                logout()
+            }       
         }
-
+        
     }, [navigate])
 
     function handleLoginInput (e) {
@@ -54,7 +70,7 @@ const LoginPage = () => {
             }
 
             
-            const response = await fetch('https://summary.eu-4.evennode.com/api/auth/login', {
+            const response = await fetch('https://summary-be.vercel.app/api/auth/login', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -62,6 +78,8 @@ const LoginPage = () => {
             },
             body: JSON.stringify(loginData)
             });
+
+            console.log(response)
 
             
             const data = await response.json()
@@ -74,7 +92,8 @@ const LoginPage = () => {
 
             if(response.ok) {
                 setMessage(data.message)
-                localStorage.setItem('token', data.token)
+                
+                setToken(data.token)
                 setLoading(false)
                 setAlertIsOpen(true)
                 navigate("/dashboard")
