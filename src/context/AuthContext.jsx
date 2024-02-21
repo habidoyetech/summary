@@ -4,7 +4,7 @@ import React, {useState, useContext, createContext} from 'react';
 const authContextDefaultValues = {
     auth: null,
     login: () => {},
-    logout: () => {},
+    logOut: () => {},
     // token: '',
     setToken: (para) => {}
 };
@@ -26,7 +26,7 @@ export function AuthProvider({children}) {
       login:  function logIn () {
         setIsAuthenticated(true)
       },
-      logout: function logOut () {
+      logOut: function logOut () {
         localStorage.clear()
         
       },

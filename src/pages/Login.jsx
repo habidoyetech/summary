@@ -22,7 +22,7 @@ const LoginPage = () => {
     const [alertIsOpen, setAlertIsOpen] = useState(false);
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate();
-    const { logout, setToken} = useAuth()
+    const { logOut, setToken} = useAuth()
 
     useEffect(() => {
 
@@ -36,11 +36,11 @@ const LoginPage = () => {
                 navigate("/dashboard")
             }
             if (isAfter(new Date(), date)) {
-                logout()
+                logOut()
             }       
         }
         
-    }, [navigate])
+    }, [navigate, logOut])
 
     function handleLoginInput (e) {
         setLoginData((prev) => ({...prev, [e.target.name]: e.target.value}))

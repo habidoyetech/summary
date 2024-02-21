@@ -10,7 +10,7 @@ import { useAuth } from '../context/AuthContext';
 const Layout = ({children}) => {
 
     const navigate = useNavigate();
-    const {logout} = useAuth()
+    const {logOut} = useAuth()
 
     useEffect(() => {
         const token = localStorage.getItem('token')
@@ -22,20 +22,20 @@ const Layout = ({children}) => {
 
         if (token !== null) {
             const decode = jwtDecode(token)
-            console.log(decode)
+            
             const date = fromUnixTime(decode.exp);
             if (isAfter(date, new Date())) {
                 
             }
             if (isAfter(new Date(), date)) {
                 console.log(date)
-                logout()
+                logOut()
                 navigate('/login')
             }
             
         }
 
-    }, [navigate])
+    }, [navigate, logOut])
 
   return (
     <div className='w-full min-h-screen bg-primary-color'>
