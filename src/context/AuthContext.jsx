@@ -3,9 +3,9 @@ import React, {useState, useContext, createContext} from 'react';
 
 const authContextDefaultValues = {
     auth: null,
-    login: () => {},
+    logIn: () => {},
     logOut: () => {},
-    // token: '',
+    userName: '',
     setToken: (para) => {}
 };
 
@@ -18,21 +18,22 @@ const AuthContext = createContext(authContextDefaultValues)
 export function AuthProvider({children}) {
 
     const [isAuthenticated, setIsAuthenticated] = useState(false)
-    // const safeToken = localStorage.getItem('token')
+    const [userName, setUserName] = useState('')
     
     const values = {
       auth: isAuthenticated,
-      // token: safeToken,
-      login:  function logIn () {
-        setIsAuthenticated(true)
+      userName: userName,
+      logIn:  function logIn (name) {
+        setUserName(name)
+        
       },
       logOut: function logOut () {
-        localStorage.clear()
-        
+        localStorage.clear()  
       },
       setToken: function setToken(newtoken) {
         localStorage.setItem('token', newtoken)
       }
+
     }
   
 

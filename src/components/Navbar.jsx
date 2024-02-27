@@ -1,7 +1,10 @@
 import React from 'react'
 import Search from './Search'
+import { useAuth } from '../context/AuthContext'
 
 const Navbar = () => {
+
+  const {userName} = useAuth()
   return (
     <div className='w-full bg-transparent'>
         <nav className='bg-transparent' >
@@ -27,7 +30,7 @@ const Navbar = () => {
                 </div>
                 <div className='bg-white py-3 px-6 rounded-xl flex  items-center space-x-6'>
                   <span className='font-normal'>
-                    Afolakunmi
+                    {userName}
                   </span>
                   <span>
                     <button type='button'>

@@ -12,7 +12,7 @@ const Search = () => {
 
                 </span>
             </label>
-            <input type="text" id='search' placeholder='Search' className='w-full h-full outline-none border-none' />
+            <input type="text" id='search' placeholder='Search' className='w-full h-full outline-none border-none focus:border-none focus:outline-none' />
         </div>
         
     </div>

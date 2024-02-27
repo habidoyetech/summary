@@ -22,7 +22,7 @@ const LoginPage = () => {
     const [alertIsOpen, setAlertIsOpen] = useState(false);
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate();
-    const { logOut, setToken} = useAuth()
+    const { logOut, setToken, logIn} = useAuth()
 
     useEffect(() => {
 
@@ -79,8 +79,6 @@ const LoginPage = () => {
             body: JSON.stringify(loginData)
             });
 
-            console.log(response)
-
             
             const data = await response.json()
             if(!response.ok) {
@@ -92,8 +90,9 @@ const LoginPage = () => {
 
             if(response.ok) {
                 setMessage(data.message)
-                
+                console.log(data)
                 setToken(data.token)
+                logIn(data.username)
                 setLoading(false)
                 setAlertIsOpen(true)
                 navigate("/dashboard")

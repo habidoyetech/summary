@@ -4,7 +4,7 @@ import DatePickerComponent from './DatePickerComponent';
 import Attendees from './Attendees';
 import { useState } from 'react';
 
-const SummaryFirstForm = ({summaryFormData, handleInputChange}) => {
+const SummaryFirstForm = ({summaryFormData, handleInputChange, setSummaryFormData}) => {
 
 
   const [selectedFile, setSelectedFile] = useState(null);
@@ -15,6 +15,10 @@ const SummaryFirstForm = ({summaryFormData, handleInputChange}) => {
     setSelectedFile(file);
     console.log(selectedFile)
   };
+
+  const handleTimeChange = event => {
+    console.log(event.target.value)
+  }
 
 
 
@@ -27,16 +31,33 @@ const SummaryFirstForm = ({summaryFormData, handleInputChange}) => {
                     <Input name='title' type='text' handleInput={handleInputChange} value={summaryFormData.summaryTitle} label='Summary Title' placeholder='Minutes for Lekki' />
                     <div className='flex w-full space-x-4'>
                       <div className=''>
-                        <DatePickerComponent name=''  handleDateChange={handleInputChange}/>
+                        
+                        <div class="relative cursor-pointer w-full"  >
+                          <label htmlFor="date" className='block text-[#7D8592] text-sm font-medium mb-2'>Date</label>
+                          <input datepicker name='date' value={summaryFormData.date} type="datetime-local" onChange={handleInputChange} class="py-3 px-4 block w-full border-[#D8E0F0] text-[#7D8592] outline-none border placeholder:text-[#7D8592] font-normal shadow-sm rounded-xl text-sm focus:border-[#D8E0F0] focus:ring-[#D8E0F0] disabled:opacity-50 disabled:pointer-events-none " placeholder="Select date"/>
+                          
+                        </div>
                       </div>
                       
                       <div className='flex w-[38%] space-x-4'>
                         {/* <CustomTimeFormat/> */}
-                        <Input name='start' type='text' value={summaryFormData.start} placeholder="00:00" label="Start "/>
-                        <Input name='end' type='text' value={summaryFormData.end} placeholder="00:00" label="End"/>
+                        {/* <input type="time" id="appt" name="appt" /> */}
+                        <div className="w-full relative">
+                            <label htmlFor='start' className={`block text-sm  font-medium mb-2`}>Start</label>
+                            <input  onChange={handleInputChange} value={summaryFormData.startTime} type='time' id='start' name='startTime' className="py-3 block w-full border-[#D8E0F0] text-[#7D8592] outline-none border placeholder:text-[#7D8592] font-normal shadow-sm rounded-xl text-sm focus:border-[#D8E0F0] focus:ring-[#D8E0F0] disabled:opacity-50 disabled:pointer-events-none" ></input>
+                        </div>
+                        <div className="w-full relative">
+                            <label htmlFor='stop' className={`block text-sm  font-medium mb-2`}>Stop</label>
+                            <input  onChange={handleInputChange} value={summaryFormData.endTime} type='time' id='stop' name='endTime' className="py-3 block w-full border-[#D8E0F0] text-[#7D8592] outline-none border placeholder:text-[#7D8592] font-normal shadow-sm rounded-xl text-sm focus:border-[#D8E0F0] focus:ring-[#D8E0F0] disabled:opacity-50 disabled:pointer-events-none" ></input>
+                        </div>
+                        {/* <Input name='start' type='time' value={summaryFormData.start} label="Start"/>
+                        <Input name='end' type='time' value={summaryFormData.end} label="End"/> */}
                         
                       </div>
 
+                    </div>
+                    <div className='w-[50%]'>
+                      <Input label='Meeting ID' disabled={true} value={summaryFormData.minuteId}/>
                     </div>
                     
                 </div>
@@ -67,13 +88,13 @@ const SummaryFirstForm = ({summaryFormData, handleInputChange}) => {
                           <input id="dropzone-file" type="file" class="hidden" name='logoName' onChange={handleFileChange} />
                       </label>
                   </div> 
-                  <Input placeholder='Logo Name'/>
+                  <Input type='text' handleInput={handleInputChange} placeholder='Logo Name' name="logoName" value={summaryFormData.logoName} />
 
                   
                 </div>
             </div>
-            <div className='bg-white shadow-lg p-6 gap-6 hadow-[#C4CBD61A] w-[40%] rounded-xl'>
-              <Attendees/>
+            <div className='bg-white shadow-lg p-6 gap-6 shadow-[#C4CBD61A] w-[40%] rounded-xl'>
+              <Attendees summaryFormData={summaryFormData} setSummaryFormData={setSummaryFormData}/>
             </div>
         </div>
         

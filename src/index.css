@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+input[type="time"]::-webkit-calendar-picker-indicator {
+  background: none;
+  /* display:none; */
+  bottom: 0;
+  color: transparent;
+  cursor: pointer;
+  height: auto;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  /* width:auto */
+  width: 100%;
+}
 
 /* body {
   margin: 0;

@@ -4,13 +4,9 @@ import { Link } from "react-router-dom";
 import { useEffect} from "react";
 
 
-// const token = localStorage.getItem('token')
 
 const Dashboard = () => {
 
-    // const [summaries, setSummaries] = useState([]);
-    // // const [error, setError] = useState(null);
-    // const [token ] = useState(localStorage.getItem('token'))
 
     useEffect(() => {
 
@@ -18,7 +14,7 @@ const Dashboard = () => {
         
         const fetchData = async () => {
           try {
-            const response = await fetch('http://summary.eu-4.evennode.com/api/v1/summaries', {
+            const response = await fetch('https://summary-be.vercel.app/api/v1/summaries', {
               method: 'GET',
               headers: {
                 'Accept': 'application/json',
@@ -53,7 +49,7 @@ const Dashboard = () => {
                 <span className="font-base text-lg">Your Summaries</span>
             </div>
             <div>
-                <Link to='/dashboard/add-summary'>
+                <Link to='/add-summary'>
                     <Button type='button' className='space-x-2 bg-[#3F8CFF] text-white py-2 px-4'>
                         <span>
                         <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">

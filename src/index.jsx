@@ -7,6 +7,7 @@ import App from './App';
 import Dashboard from './pages/Dashboard';
 import AddSummary from './pages/AddSummary';
 import { AuthProvider } from './context/AuthContext';
+import ContractTenderedForApproval from './pages/ContractTenderedForApproval';
 
 
 
@@ -25,8 +26,12 @@ const router = createBrowserRouter([
 
   },
   {
-    path: "/dashboard/add-summary",
+    path: "/add-summary",
     element: <AddSummary/>
+  },
+  {
+    path: "/:summaryId/contract-tendered-for-approval",
+    element: <ContractTenderedForApproval/>
   }
 ])
 

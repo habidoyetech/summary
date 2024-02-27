@@ -1,23 +1,44 @@
 import React, { useState } from 'react'
 import Input from './Input'
+import { v4 as uuidv4 } from 'uuid';
 
-const Attendees = () => {
+const Attendees = ({summaryFormData, setSummaryFormData}) => {
+
+    
 
     const [attendes, setAttendes] = useState([
-        {id:1, name: '', role: ''}
+        ...summaryFormData.attendees
     ])
 
-    const [changes, setChanges] = useState(false)
+    // const [newAttendeesName, setNewAttendeesName] = useState('')
+
+    // const [newAttendessRole, setNewAttendeesRole] = useState('')
+
+    const uuid = uuidv4()
 
     function AddNewAttende () {
-        setAttendes((prev) => [...prev, {id: attendes.length + 1, name: '', role:''}])
+        setAttendes((prev) => [...prev, {id: uuid, name: '', role:''}])
+    }
+
+    function handleAttendeeInputChange (e, id) {
+        const updatedAttendees = attendes.map(attendee => {
+            if (attendee.id === id) {
+                return {...attendee, [e.target.name]: e.target.value}
+            }
+            return attendee
+        })
+
+        setAttendes(updatedAttendees)
+        setSummaryFormData({...summaryFormData, attendees: [...updatedAttendees]})
+
+        console.log(attendes)
+        console.log(summaryFormData)
     }
 
     function removeAttende(id) {
         const newAttendes = attendes.filter((attende) => attende.id !== id)
         setAttendes(newAttendes)
         console.log(newAttendes)
-        console.log('me')
     }
 
   return (
@@ -43,10 +64,10 @@ const Attendees = () => {
 
                         </div>
                         <div className='w-[90%]'>
-                            <Input type='text' placeholder={`Attende ${attendes.indexOf(attende) + 1}`}/>
+                            <Input  type='text' name='name' value={attende.name} handleInput={(e) => handleAttendeeInputChange(e, attende.id)} placeholder={`Attende ${attendes.indexOf(attende) + 1}`}/>
                         </div>
                         <div>
-                            <Input type='text' placeholder='role'/>
+                            <Input  name='role' value={attende.role} handleInput={(e) => handleAttendeeInputChange(e, attende.id)} type='text' placeholder='role'/>
                         </div>
                     </div>
 
@@ -74,9 +95,9 @@ const Attendees = () => {
             <div className='px-6 py-4 rounded-lg bg-[#F4F9FD] flex items-center justify-between'>
                 <span className='text-sm font-base'>Save Attendees</span>
 
-                <label class="relative inline-flex items-center cursor-pointer">
-                    <input type="checkbox" onChange={() => setChanges(prev => !prev)} checked={changes} class="sr-only peer"/>
-                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none outline-none  rounded-full peer  peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] peer-checked:outline-none after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-blue-600"></div>
+                <label className="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox"  class="sr-only peer"/>
+                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none outline-none  rounded-full peer  peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] peer-checked:outline-none after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-blue-600"></div>
                 </label>
 
 
