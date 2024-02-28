@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useParams } from 'react-router-dom';
 import { Dialog, Transition } from '@headlessui/react'
 import SignerForm from '../components/SignerForm';
+import Alert from '../components/Alert';
 
 
 
@@ -14,8 +15,14 @@ const ContractTenderedForApproval = () => {
 
     const uuid = uuidv4();
     const params = useParams();
+    const token = localStorage.getItem('token')
 
-    let [isOpen, setIsOpen] = useState(true)
+    let [isOpen, setIsOpen] = useState(false)
+    const [message, setMessage] = useState('');
+    const [error, setError] = useState(false);
+    const [alertIsOpen, setAlertIsOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
+
 
     const [contracts, setContract] = useState(
         
@@ -68,7 +75,7 @@ const ContractTenderedForApproval = () => {
     
 
     useEffect(() => {
-        const token = localStorage.getItem('token')
+        
 
     })
 
@@ -149,20 +156,60 @@ const ContractTenderedForApproval = () => {
       setContract(updatedContract)
     }
 
+    async function handleSubmitContract (e) {
+        e.preventDefault()
+        setLoading(true)
+        try {
+            const response = await fetch('https://summary-be.vercel.app/api/v1/contract', {
+            method: 'POST',
+            headers: {
+                'accept': 'application/json',
+                'authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({contracts: contracts})
+            });
+
+            const data =  await response.json()
+            if (response.ok) {
+                console.log(data)
+                setMessage("Contract Added Succesfully")
+                setLoading(false)
+                setAlertIsOpen(true)
+                // openModal()
+                // navigate(`/${data.id}/contract-tendered-for-approval`)
+            } 
+
+            if (!response.ok) {
+                console.log(data)
+                setMessage(data.message)
+                setError(true)
+                setLoading(false)
+                setAlertIsOpen(true)
+            }
+        } catch (error) {
+            console.log(error)
+            
+        }
+
+    }
+
     
 
   return (
     <Layout>
         <div>
-            <form action="">
+          {alertIsOpen && <Alert message={message} setError={setError} error={error} setAlertIsOpen={setAlertIsOpen}/>}
+
+            <form action="" onSubmit={handleSubmitContract}>
                 <ContractTenderedForApprovalForm contractsData={contracts} handleInputChange={handleContractInputChange} handleRFAInputChange={handleRFAInputChange} AddVendor={AddVendor} AddContract={AddNewContract} removeVendor={removeVendor}/>
-                <SignerForm closeModal={closeModal} isOpen={isOpen}/>
+                {isOpen && <SignerForm openModal={openModal} closeModal={closeModal} isOpen={isOpen}/>}
                 <div className='flex justify-end mt-20'>
                     <div className='flex space-x-4'>
                         <Button type='button' onClick={() => {}}  className='px-11 py-3 text-[#7D8594] bg-[#F4F9FD]'>
                             <span className='text-[16px] font-medium'>Back</span>
                         </Button>
-                        <Button type='button' onClick={openModal} className='px-16 py-3 text-white bg-blue-600'>
+                        <Button type='submit' disabled={loading} className='px-16 py-3 text-white bg-blue-600 disabled:bg-blue-400'>
                             <span className='text-[16px] font-medium'>Proceed</span>
                         </Button>
                     </div>   

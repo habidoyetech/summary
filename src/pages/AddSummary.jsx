@@ -38,7 +38,7 @@ const AddSummary = () => {
     const [message, setMessage] = useState('');
     const [error, setError] = useState(false);
     const [alertIsOpen, setAlertIsOpen] = useState(false);
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
     
 
     
@@ -90,7 +90,7 @@ const AddSummary = () => {
   return (
     <Layout>
         <div className='relative'>
-            {alertIsOpen && <Alert message={message} setError={setError} error={error} setAlertIsOpen={setAlertIsOpen}/>}
+            {alertIsOpen && <Alert message={message} alertIsOpen={alertIsOpen} setError={setError} error={error} setAlertIsOpen={setAlertIsOpen}/>}
 
             <form action="" onSubmit={handleSubmitSummary}>
                 <SummaryFirstForm summaryFormData={summaryFormData} handleInputChange={handleInputChange} setSummaryFormData={setSummaryFormData}/>
